@@ -9,7 +9,7 @@ namespace Client.ClientInput
         [SerializeField] private Transform plane;
         private void Update()
         {
-            if (!Input.GetMouseButton(0)) {return;}
+            if (!Input.GetMouseButtonDown(0)) {return;}
             
             var ray = camera.ScreenPointToRay(Input.mousePosition);
             var hits = Physics.RaycastAll(ray);
