@@ -15,19 +15,14 @@ namespace Client.Entities
 
         public void AddMovementComponent(int entityID, Vector3 position) 
         {
-            var movementPool = worldManager.GameWorld.GetPool<MovementComponent>();
-            ref var movementData = ref movementPool.Add(entityID);
-            movementData.Position = position;
+            var positionPool = worldManager.GameWorld.GetPool<Position>();
+            ref var positionData = ref positionPool.Add(entityID);
+            positionData.EntityPosition = position;
         }
         public void AddPlayerMarker(int entityID) 
         {
             var playerPool = worldManager.GameWorld.GetPool<PlayerMarker>();
             var playerData = playerPool.Add(entityID);
-        }
-        public void AddPlayerInputListener(int entityID) 
-        {
-            var inputPool = worldManager.GameWorld.GetPool<PlayerInputListener>();
-            ref var inputData = ref inputPool.Add(entityID);
         }
     }
 }

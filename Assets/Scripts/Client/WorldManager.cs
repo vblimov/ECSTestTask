@@ -29,6 +29,7 @@ namespace Client
         private void Update()
         {
             GameSystems?.Run();
+            globalSharedData.DeltaTime = Time.deltaTime;
         }
 
         public void Dispose()

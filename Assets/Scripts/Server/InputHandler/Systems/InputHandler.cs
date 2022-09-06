@@ -18,8 +18,8 @@ namespace Server.InputHandlerFeature.Systems
             {
                 return;
             }
-            var lastInputData = new PlayerInputListener();
-            var inputList = new List<PlayerInputListener>(inputData.GetInput());
+            var lastInputData = new PlayerInput();
+            var inputList = new List<PlayerInput>(inputData.GetInput());
             foreach (var input in inputList)
             {
                 if (input.Time > lastInputData.Time)
@@ -42,7 +42,7 @@ namespace Server.InputHandlerFeature.Systems
                 return;
             }
             
-            var inputPool = world.GetPool<PlayerInputListener>();
+            var inputPool = world.GetPool<PlayerInput>();
             foreach (var player in filter)
             {
                 inputPool.AddIfHasNot(player);

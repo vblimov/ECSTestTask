@@ -11,19 +11,19 @@ namespace Server
         
         public class InputSharedData
         {
-            private readonly List<PlayerInputListener> inputEntities = new();
+            private readonly List<PlayerInput> inputEntities = new();
 
-            public void AddInput(PlayerInputListener position)
+            public void AddInput(PlayerInput position)
             {
                 inputEntities.Add(position);
             }
 
-            public List<PlayerInputListener> GetInput()
+            public List<PlayerInput> GetInput()
             {
                 return inputEntities;
             }
 
-            public void RemoveInput(PlayerInputListener input)
+            public void RemoveInput(PlayerInput input)
             {
                 inputEntities.Remove(input);
             }

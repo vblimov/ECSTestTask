@@ -28,18 +28,18 @@ namespace Client.Entities
 
         private void UpdatePosition()
         {
-            var movementPool = worldManager.GameWorld.GetPool<MovementComponent>();
-            if (!movementPool.Has(EntityId))
+            var positionPool = worldManager.GameWorld.GetPool<Position>();
+            if (!positionPool.Has(EntityId))
             {
                 return;
             }
 
-            var movement = movementPool.Get(EntityId);
-            if (movement.TargetPosition.Equals(transform.position))
+            var position = positionPool.Get(EntityId);
+            if (position.EntityPosition.Equals(transform.position))
             {
                 return;
             }
-            transform.position = movement.TargetPosition;
+            transform.position = position.EntityPosition;
         }
 
         private void RegisterEntity()

@@ -28,7 +28,7 @@ namespace Client.ClientInput
             {
                 if (hit.transform != plane) {continue;}
                 
-                inputSharedData.AddInput(new PlayerInputListener(Time.timeAsDouble, hit.point));
+                inputSharedData.AddInput(new PlayerInput(Time.timeAsDouble, hit.point));
             }
         }
     }
