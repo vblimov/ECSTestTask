@@ -1,5 +1,7 @@
-﻿using MovementFeature.Components;
+﻿using Server;
+using Server.InputHandlerFeature.Components;
 using UnityEngine;
+using Zenject;
 
 namespace Client.ClientInput
 {
@@ -7,6 +9,14 @@ namespace Client.ClientInput
     {
         [SerializeField] private Camera camera;
         [SerializeField] private Transform plane;
+        [Inject] private WorldManager worldManager;
+        private GlobalSharedData.InputSharedData inputSharedData;
+
+        private void Start()
+        {
+            inputSharedData = worldManager.GameSystems.GetShared<GlobalSharedData>().InputData;
+        }
+
         private void Update()
         {
             if (!Input.GetMouseButtonDown(0)) {return;}
@@ -18,11 +28,7 @@ namespace Client.ClientInput
             {
                 if (hit.transform != plane) {continue;}
                 
-                var inputPool = AppServices.I.WorldManager.GameWorld.GetPool<PlayerInputListener>();
-                var inputEntity = AppServices.I.WorldManager.GameWorld.NewEntity();
-                ref var eventData = ref inputPool.Add(inputEntity);
-                eventData.Time = Time.timeAsDouble;
-                eventData.PlayerInputPosition = hit.point;
+                inputSharedData.AddInput(new PlayerInputListener(Time.timeAsDouble, hit.point));
             }
         }
     }

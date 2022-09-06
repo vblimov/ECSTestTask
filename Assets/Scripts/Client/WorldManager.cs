@@ -1,5 +1,9 @@
 ﻿using System;
 using Leopotam.EcsLite;
+using Server;
+using Server.InputHandlerFeature;
+using Server.InputHandlerFeature.Systems;
+using Server.MovementFeature.Systems;
 using UnityEngine;
 
 namespace Client
@@ -8,36 +12,28 @@ namespace Client
     {
 
         public EcsWorld GameWorld { get; private set; }
-        private EcsSystems updateSystems;
-        private EcsSystems fixedUpdateSystems;
+        public EcsSystems GameSystems { get; private set; }
+        private GlobalSharedData globalSharedData;
 
         private void Awake()
         {
             GameWorld = new EcsWorld();
-            updateSystems = new EcsSystems(GameWorld);
-            fixedUpdateSystems = new EcsSystems(GameWorld);
-            updateSystems
-                .Add(new InputHandlerFeature.Systems.InputHandler())
-                .Init();
-            fixedUpdateSystems
-                .Add(new MovementFeature.Systems.MovementSystem())
+            globalSharedData = new GlobalSharedData();
+            GameSystems = new EcsSystems(GameWorld, globalSharedData);
+            GameSystems
+                .Add(new InputHandler())
+                .Add(new MovementSystem())
                 .Init();
         }
 
         private void Update()
         {
-            updateSystems?.Run();
-        }
-
-        private void FixedUpdate()
-        {
-            fixedUpdateSystems?.Run();
+            GameSystems?.Run();
         }
 
         public void Dispose()
         {
-            updateSystems?.Destroy();
-            fixedUpdateSystems?.Destroy();
+            GameSystems?.Destroy();
             GameWorld?.Destroy();
         }
     }
