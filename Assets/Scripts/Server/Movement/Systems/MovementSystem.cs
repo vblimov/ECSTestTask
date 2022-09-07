@@ -3,7 +3,7 @@ using Server.InputHandlerFeature.Components;
 using Server.MovementFeature.Components;
 using Server.MovementFeature.Markers;
 
-namespace Server.MovementFeature.Systems
+namespace Server.Movement.Systems
 {
     public class MovementSystem : IEcsRunSystem, IEcsInitSystem
     {

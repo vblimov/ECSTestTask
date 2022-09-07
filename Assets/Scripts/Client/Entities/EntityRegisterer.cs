@@ -1,5 +1,4 @@
-﻿using Server.InputHandlerFeature.Components;
-using Server.MovementFeature.Components;
+﻿using Server.MovementFeature.Components;
 using Server.MovementFeature.Markers;
 using UnityEngine;
 
@@ -13,16 +12,24 @@ namespace Client.Entities
             this.worldManager = worldManager;
         }
 
-        public void AddMovementComponent(int entityID, Vector3 position) 
+        public void AddMovementComponent(int entityId, Vector3 position) 
         {
             var positionPool = worldManager.GameWorld.GetPool<Position>();
-            ref var positionData = ref positionPool.Add(entityID);
+            ref var positionData = ref positionPool.Add(entityId);
             positionData.EntityPosition = position;
         }
-        public void AddPlayerMarker(int entityID) 
+        public void AddPlayerMarker(int entityId) 
         {
             var playerPool = worldManager.GameWorld.GetPool<PlayerMarker>();
-            var playerData = playerPool.Add(entityID);
+            var playerData = playerPool.Add(entityId);
+        }
+
+        public void AddButtonComponent(int entityId, float radius, bool isPressed)
+        {
+            var buttonPool = worldManager.GameWorld.GetPool<Server.ButtonPress.Components.Button>();
+            ref var buttonData = ref buttonPool.Add(entityId);
+            buttonData.Radius = radius;
+            buttonData.IsPressed = isPressed;
         }
     }
 }

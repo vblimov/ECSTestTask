@@ -1,15 +1,16 @@
-﻿using Server.MovementFeature.Components;
+﻿using Client.Entities;
+using Server.MovementFeature.Components;
 using UnityEngine;
 using Zenject;
 
-namespace Client.Entities
+namespace Client.Player
 {
-    public class PlayerEntity : MonoBehaviour
+    public class PlayerController : MonoBehaviour
     {
-        public int EntityId { get; private set; }
-        
         [Inject] private WorldManager worldManager;
         [Inject] private EntityDistributor entityDistributor;
+
+        private int entityId;
 
         private void Start()
         {
@@ -29,12 +30,12 @@ namespace Client.Entities
         private void UpdatePosition()
         {
             var positionPool = worldManager.GameWorld.GetPool<Position>();
-            if (!positionPool.Has(EntityId))
+            if (!positionPool.Has(entityId))
             {
                 return;
             }
 
-            var position = positionPool.Get(EntityId);
+            var position = positionPool.Get(entityId);
             if (position.EntityPosition.Equals(transform.position))
             {
                 return;
@@ -44,9 +45,9 @@ namespace Client.Entities
 
         private void RegisterEntity()
         {
-            EntityId = entityDistributor.RegisterEntity(gameObject.GetInstanceID().ToString());
-            entityDistributor.EntityRegisterer.AddMovementComponent(EntityId, transform.position);
-            entityDistributor.EntityRegisterer.AddPlayerMarker(EntityId);
+            entityId = entityDistributor.RegisterEntity(gameObject.GetInstanceID().ToString());
+            entityDistributor.EntityRegisterer.AddMovementComponent(entityId, transform.position);
+            entityDistributor.EntityRegisterer.AddPlayerMarker(entityId);
         }
 
         private void UnregisterEntity()

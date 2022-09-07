@@ -1,9 +1,10 @@
 ﻿using System;
 using Leopotam.EcsLite;
 using Server;
+using Server.ButtonPress.Systems;
 using Server.InputHandlerFeature;
 using Server.InputHandlerFeature.Systems;
-using Server.MovementFeature.Systems;
+using Server.Movement.Systems;
 using UnityEngine;
 
 namespace Client
@@ -23,6 +24,7 @@ namespace Client
             GameSystems
                 .Add(new InputHandler())
                 .Add(new MovementSystem())
+                .Add(new ButtonSystem())
                 .Init();
         }
 
