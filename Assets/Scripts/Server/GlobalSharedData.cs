@@ -30,7 +30,8 @@ namespace Server
         }
         public class MovementSharedData
         {
-            public float MoveSpeed = 1f;
+            public float PlayerMoveSpeed = 1f;
+            public float DoorMoveSpeed = 1f;
         }
     }
 }

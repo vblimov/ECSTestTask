@@ -31,7 +31,6 @@ namespace Server.InputHandlerFeature.Systems
 
             Debug.Log(lastInputData.Time + " " + lastInputData.PlayerInputPosition);
             DistributeInputEvent(world, lastInputData.PlayerInputPosition);
-            
         }
 
         private void DistributeInputEvent(EcsWorld world, Vector3 inputPoint)

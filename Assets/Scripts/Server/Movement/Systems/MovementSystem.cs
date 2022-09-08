@@ -40,7 +40,7 @@ namespace Server.Movement.Systems
 
                 ref var movedEntity = ref positionPool.Get(entity);
                 var input = inputPool.Get(entity);
-                var distance = globalSharedData.MovementData.MoveSpeed * globalSharedData.DeltaTime;
+                var distance = globalSharedData.MovementData.PlayerMoveSpeed * globalSharedData.DeltaTime;
                 var direction = input.PlayerInputPosition - movedEntity.EntityPosition;
                 if (direction.magnitude > distance)
                 {

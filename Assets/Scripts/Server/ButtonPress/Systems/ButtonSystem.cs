@@ -12,6 +12,16 @@ namespace Server.ButtonPress.Systems
             var world = systems.GetWorld();
             var playerFilter = world.Filter<PlayerMarker>().End();
             var buttonFilter = world.Filter<Button>().End();
+            if (playerFilter.GetEntitiesCount() == 0 || buttonFilter.GetEntitiesCount() == 0)
+            {
+                return;
+            }
+
+            ManageButtonState(world, buttonFilter, playerFilter);
+        }
+
+        private void ManageButtonState(EcsWorld world, EcsFilter buttonFilter, EcsFilter playerFilter)
+        {
             var positionPool = world.GetPool<Position>();
             var buttonPool = world.GetPool<Button>();
 

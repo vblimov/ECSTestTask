@@ -1,13 +1,13 @@
-﻿using System;
-using Client.Entities;
+﻿using Client.Entities;
 using UnityEngine;
 using Zenject;
 
-namespace Client.MapButtons
+namespace Client.MapDoors
 {
-    public class ButtonController : MonoBehaviour
+    public class DoorController : MonoBehaviour
     {
-        [SerializeField] private float radius;
+        [SerializeField] private Vector3 closedPosition;
+        [SerializeField] private Vector3 openPosition;
         private int entityId;
         [Inject] private WorldManager worldManager;
         [Inject] private EntityDistributor entityDistributor;
@@ -19,7 +19,7 @@ namespace Client.MapButtons
 
         private void Update()
         {
-            UpdateButtonState();
+            UpdateDoorState();
         }
 
         private void OnDestroy()
@@ -27,23 +27,22 @@ namespace Client.MapButtons
             UnregisterEntity();
         }
 
-        private void UpdateButtonState()
+        private void UpdateDoorState()
         {
-            var buttonPool = worldManager.GameWorld.GetPool<Server.ButtonPress.Components.Button>();
-            if (!buttonPool.Has(entityId))
+            var doorPool = worldManager.GameWorld.GetPool<Server.DoorOpen.Components.Door>();
+            if (!doorPool.Has(entityId))
             {
                 return;
             }
 
-            var buttonData = buttonPool.Get(entityId);
-            var localScale = transform.localScale;
-            transform.localScale = new Vector3(localScale.x, buttonData.IsPressed ? 0.05f : 0.1f, localScale.z);
+            var doorData = doorPool.Get(entityId);
+            transform.localPosition = Vector3.Lerp(closedPosition, openPosition, doorData.OpenValue);
         }
 
         private void RegisterEntity()
         {
             entityId = entityDistributor.RegisterEntity(gameObject.GetInstanceID().ToString());
-            entityDistributor.EntityRegisterer.AddButtonComponent(entityId, radius, false);
+            entityDistributor.EntityRegisterer.AddDoorComponent(entityId, false);
             entityDistributor.EntityRegisterer.AddPositionComponent(entityId, transform.position);
         }
 

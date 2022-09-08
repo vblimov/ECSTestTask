@@ -46,7 +46,7 @@ namespace Client.Player
         private void RegisterEntity()
         {
             entityId = entityDistributor.RegisterEntity(gameObject.GetInstanceID().ToString());
-            entityDistributor.EntityRegisterer.AddMovementComponent(entityId, transform.position);
+            entityDistributor.EntityRegisterer.AddPositionComponent(entityId, transform.position);
             entityDistributor.EntityRegisterer.AddPlayerMarker(entityId);
         }
 

@@ -11,5 +11,12 @@ namespace Server.Extensions
                 pool.Add(entity);
             }
         }
+        public static void RemoveIfHas<T>(this EcsPool<T> pool, int entity) where T : struct
+        {
+            if (pool.Has(entity))
+            {
+                pool.Del(entity);
+            }
+        }
     }
 }
