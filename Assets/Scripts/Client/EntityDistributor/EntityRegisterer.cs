@@ -22,6 +22,12 @@ namespace Client.Entities
             var playerPool = worldManager.GameWorld.GetPool<Server.MovementFeature.Markers.PlayerMarker>();
             var playerData = playerPool.Add(entityId);
         }
+        public void AddAnimatorComponent(int entityId) 
+        {
+            var animatorPool = worldManager.GameWorld.GetPool<Server.Movement.Components.Animator>();
+            ref var animatorData = ref animatorPool.Add(entityId);
+            animatorData.IsRunning = false;
+        }
 
         public void AddButtonComponent(int entityId, float radius, bool isPressed)
         {

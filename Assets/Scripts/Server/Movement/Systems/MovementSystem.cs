@@ -2,6 +2,8 @@
 using Server.InputHandlerFeature.Components;
 using Server.MovementFeature.Components;
 using Server.MovementFeature.Markers;
+using UnityEngine;
+using Animator = Server.Movement.Components.Animator;
 
 namespace Server.Movement.Systems
 {
@@ -32,6 +34,7 @@ namespace Server.Movement.Systems
             foreach (var entity in filteredEntities)
             {
                 var positionPool = world.GetPool<Position>();
+                var animatorPool = world.GetPool<Animator>();
                 var inputPool = world.GetPool<PlayerInput>();
                 if (!positionPool.Has(entity) || !inputPool.Has(entity))
                 {
@@ -42,6 +45,11 @@ namespace Server.Movement.Systems
                 var input = inputPool.Get(entity);
                 var distance = globalSharedData.MovementData.PlayerMoveSpeed * globalSharedData.DeltaTime;
                 var direction = input.PlayerInputPosition - movedEntity.EntityPosition;
+                if (animatorPool.Has(entity))
+                {
+                    ref var animator = ref animatorPool.Get(entity);
+                    animator.IsRunning = direction.magnitude > distance;
+                }
                 if (direction.magnitude > distance)
                 {
                     direction = direction.normalized * distance;
